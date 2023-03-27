@@ -1,6 +1,7 @@
 package com.techacademy.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -35,4 +36,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // ----- 追加:ここから -----
+    /** Userの削除を行なう */
+    @Transactional
+    public void deleteUser(Set<Integer> idck) {
+        for(Integer id : idck) {
+            userRepository.deleteById(id);
+        }
+    }
+    // ----- 追加:ここまで -----
 }
