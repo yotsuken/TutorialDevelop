@@ -76,10 +76,12 @@ public class UserController {
     @PostMapping("/update/{id}/")
     public String postUser(@Validated User user, BindingResult result, @PathVariable("id") Integer id, Model model) {
         if (result.hasErrors()) {
-            // エラーがある場合は、Modelにエラーメッセージを設定してgetUser()メソッドを呼び出す
+            // エラーメッセージをModelに登録
             model.addAttribute("error", "エラーが発生しました");
-
-            return getUser(null, model);
+            // ユーザー情報をModelに登録
+            model.addAttribute("user", user);
+            // 入力画面に遷移
+            return "user/update";
         }
         user.setId(id); // Userオブジェクトにidを設定
         service.saveUser(user); // サービスを呼び出す

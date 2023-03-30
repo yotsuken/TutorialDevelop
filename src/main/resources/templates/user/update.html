@@ -20,7 +20,7 @@
         <br>
         <label for="gender">性別</label>
         <select th:field="*{gender}" th:errorclass="err">
-        <option value="" th:text="選択してください" th:selected="${user.gender == null}" th:if="${user.gender == null}"></option>
+        <option value="" th:text="選択してください" th:selected="${user.gender == ''}" >
             <option
                 th:each="item:${T(com.techacademy.entity.User.Gender).values()}"
                 th:value="${item}" th:text="${item}" th:selected="*{gender} == ${item}">
