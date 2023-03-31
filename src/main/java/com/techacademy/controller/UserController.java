@@ -59,32 +59,26 @@ public class UserController {
     /** User更新画面を表示 */
     @GetMapping("/update/{id}/")
     public String getUser(@PathVariable("id") Integer id, Model model) {
-        User user;
-        if(id !=null) {
-           //idがnullではない場合は一覧画面から遷移
-            user = service.getUser(id);
+        if(id != null) {
+            // 一覧画面から遷移
+            model.addAttribute("user", service.getUser(id));
         } else {
-            //idがnullの場合はpostUser()から遷移
-            user = new User();
+            // postUserから遷移
+            model.addAttribute("user", new User());
         }
-        model.addAttribute("user", user);
         // User更新画面に遷移
         return "user/update";
     }
 
     /** User更新処理 */
     @PostMapping("/update/{id}/")
-    public String postUser(@Validated User user, BindingResult result, @PathVariable("id") Integer id, Model model) {
-        if (result.hasErrors()) {
-            // エラーメッセージをModelに登録
-            model.addAttribute("error", "エラーが発生しました");
-            // ユーザー情報をModelに登録
-            model.addAttribute("user", user);
-            // 入力画面に遷移
+    public String postUser(@PathVariable("id") Integer id, @Validated User user, BindingResult res, Model model) {
+        if(res.hasErrors()) {
+            // エラーあり
             return "user/update";
         }
-        user.setId(id); // Userオブジェクトにidを設定
-        service.saveUser(user); // サービスを呼び出す
+        // User登録
+        service.saveUser(user);
         // 一覧画面にリダイレクト
         return "redirect:/user/list";
     }
