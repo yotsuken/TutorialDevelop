@@ -78,10 +78,11 @@ public class UserController {
             model.addAttribute("user", user);
             return getUser(null, user, model);
         }
-        // User登録
+        // User更新
+        user.setId(id); // IDをセット
         service.saveUser(user);
-        // getUser() メソッドを呼び出し、Modelにセットして遷移
-        return getUser(null, user, model);
+        // 一覧画面にリダイレクト
+        return "redirect:/user/list";
     }
 
 
